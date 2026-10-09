@@ -1,0 +1,41 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
+export default function Hero() {
+  const today = new Date().toLocaleDateString('bn-BD', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+  return (
+    <section className="mb-8 flex flex-col items-center justify-between gap-4 rounded-3xl border border-[#e2ebe3] bg-[#fbfdfb] p-6 sm:flex-row sm:p-8">
+      <div>
+        <p className="mb-3 inline-block rounded-full bg-[#e8f4eb] px-3 py-1 text-xs text-green-700">
+          {today}
+        </p>
+        <h1 className="text-2xl font-bold text-[#26352b] sm:text-3xl">
+          আজকের বাজারের দাম এক নজরে
+        </h1>
+        <p className="mt-2 max-w-xl text-sm leading-6 text-gray-600">
+          চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম এক জায়গায় দেখুন।
+        </p>
+        <Link
+          href="#সব-পণ্য"
+          className="mt-4 inline-block rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-800"
+        >
+          সব পণ্য দেখুন
+        </Link>
+      </div>
+
+      <Image
+        src="/bazar-hero.png"
+        alt="বাজারের পণ্যভর্তি ঝুড়ি"
+        width={220}
+        height={184}
+        className="h-auto w-40 sm:w-52"
+      />
+    </section>
+  );
+}
