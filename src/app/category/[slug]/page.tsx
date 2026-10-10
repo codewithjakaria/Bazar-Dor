@@ -38,7 +38,7 @@ async function CategoryProducts({ params }: PageProps) {
         <CategoryProductList products={products} />
       ) : (
         <section className="rounded-2xl bg-white p-8 text-center">
-          <p className="text-gray-700">এই category-তে কোনো পণ্য নেই।</p>
+          <p className="text-gray-700">এই category-তে কোনো পণ্য পাওয়া যায় নাই ।</p>
           <Link href="/" className="mt-4 inline-block text-green-700 hover:underline">
             হোম পেজে ফিরে যান
           </Link>
