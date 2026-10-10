@@ -75,6 +75,21 @@ export default function ProfileForm({
     }
   }
 
+  async function handleGitHubLink() {
+    try {
+      const result = await authClient.linkSocial({
+        provider: 'github',
+        callbackURL: '/profile',
+      });
+
+      if (result.error) {
+        toast.error(result.error.message || 'GitHub account link করা যায়নি');
+      }
+    } catch {
+      toast.error('আবার চেষ্টা করুন');
+    }
+  }
+
   return (
     <div className="w-full max-w-2xl">
       <div className="mb-5">
@@ -130,9 +145,19 @@ export default function ProfileForm({
         <h2 className="mb-4 font-bold text-[#26352b]">তথ্য</h2>
         <p className="text-sm text-gray-600">নাম: {name}</p>
         <p className="mt-2 text-sm text-gray-600">ইমেইল: {email}</p>
+        <p className="mt-4 text-xs text-gray-500">
+          GitHub দিয়ে sign in করতে চাইলে আগে GitHub account-টি link করুন।
+        </p>
+        <button
+          type="button"
+          onClick={handleGitHubLink}
+          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+        >
+          GitHub account link করুন
+        </button>
         <Link
           href="/profile/update"
-          className="mt-5 block rounded-lg bg-green-700 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-green-800"
+          className="mt-3 block rounded-lg bg-green-700 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-green-800"
         >
           তথ্য update করুন
         </Link>
