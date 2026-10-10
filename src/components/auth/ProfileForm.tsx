@@ -55,7 +55,7 @@ export default function ProfileForm({
         return;
       }
 
-      toast.success('নাম update হয়েছে');
+      toast.success('প্রোফাইল update হয়েছে');
     } catch {
       toast.error('আবার চেষ্টা করুন');
     } finally {
@@ -80,7 +80,7 @@ export default function ProfileForm({
   }
 
   return (
-    <div className="w-full max-w-3xl">
+    <div className="w-full max-w-2xl">
       <div className="mb-5">
         <h1 className="text-2xl font-bold text-[#26352b]">আমার প্রোফাইল</h1>
         <p className="mt-1 text-sm text-gray-500">আপনার account-এর তথ্য এখানে দেখুন।</p>
