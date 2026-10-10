@@ -29,7 +29,10 @@ export default async function Navbar() {
 
           <AuthButtons />
         </div>
-        <nav className="overflow-x-auto pb-2">
+        <nav
+          aria-label="পণ্যের ক্যাটাগরি"
+          className="nav-scrollbar -mx-4 overflow-x-auto border-t border-gray-100 px-4 py-2 overscroll-x-contain sm:mx-0 sm:border-0 sm:px-0"
+        >
           <Suspense fallback={<div className="h-8" />}>
             <NavLinks categories={categories} />
           </Suspense>

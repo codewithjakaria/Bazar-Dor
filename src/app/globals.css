@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+.nav-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes price-ticker-scroll {
   from {
     transform: translateX(0);
