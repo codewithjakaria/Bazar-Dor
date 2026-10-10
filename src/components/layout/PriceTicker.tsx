@@ -1,6 +1,13 @@
 import { getProducts } from '@/lib/api';
 import type { Product } from '@/types';
 
+function getUnitName(unit: Product['unit']) {
+  if (unit === 'kg') return 'কেজি';
+  if (unit === 'litre') return 'লিটার';
+  if (unit === 'dozen') return 'ডজন';
+  return 'পিস';
+}
+
 export default async function PriceTicker() {
   let products: Product[] = [];
 
@@ -17,7 +24,7 @@ export default async function PriceTicker() {
           <span key={`${product.id}-${index}`} className="flex items-center gap-2 text-xs text-gray-600">
             <span>{product.image}</span>
             <span>{product.nameBn}</span>
-            <span>{product.today.toLocaleString('bn-BD')} টাকা</span>
+            <span>{product.today.toLocaleString('bn-BD')} টাকা/{getUnitName(product.unit)}</span>
             <span className={product.change.dir === 'down' ? 'text-green-600' : 'text-red-500'}>
               {product.change.dir === 'up' ? '▲' : product.change.dir === 'down' ? '▼' : '—'}{' '}
               {Math.abs(product.change.pct).toLocaleString('bn-BD')}%

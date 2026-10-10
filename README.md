@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# বাজার দর (BazarDor)
 
-## Getting Started
+বাংলাদেশের দৈনন্দিন বাজারের পণ্যের দাম এক জায়গায় দেখার ছোট web app। এখানে বিভিন্ন পণ্যের আজকের দাম, দাম বাড়া-কমা এবং বাজারভিত্তিক দাম দেখা যায়।
 
-First, run the development server:
+## Features
+
+- পণ্য ও category API থেকে দেখায়
+- দাম বাড়া ও কমা পণ্যের আলাদা তালিকা
+- পণ্যের বিস্তারিত ও বাজারভিত্তিক দাম
+- category অনুযায়ী পণ্য সাজানো
+- Better Auth দিয়ে sign up ও sign in
+- MongoDB Atlas-এ account রাখা
+- private product details ও profile page
+- profile name ও ছবি update
+- বাংলা দাম, date এবং moving price ticker
+
+## Technologies
+
+- Next.js App Router
+- React ও TypeScript
+- Tailwind CSS
+- Better Auth
+- MongoDB Atlas
+- React Hot Toast
+
+## চালানোর নিয়ম
+
+প্রথমে package install করুন:
+
+```bash
+npm install
+```
+
+Project-এর root-এ `.env.local` নামে ফাইল বানিয়ে `.env.example`-এর variable-গুলো নিজের তথ্য দিয়ে পূরণ করুন। MongoDB Atlas-এর connection string ও Better Auth secret লাগবে। Google/GitHub sign in চালাতে চাইলে ওই দুই provider-এর key-ও দিতে হবে।
+
+তারপর app চালান:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Browser-এ `http://localhost:3000` খুলুন।
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Product API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+পণ্য ও category-এর data এই API থেকে আসে:
 
-## Learn More
+```text
+https://api.api-store.workers.dev/api/bazardor
+```
 
-To learn more about Next.js, take a look at the following resources:
+Alternative API:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+https://api.abcz.workers.dev/api/bazardor
+```

@@ -30,7 +30,9 @@ export default async function Navbar() {
           <AuthButtons />
         </div>
         <nav className="overflow-x-auto pb-2">
-          <NavLinks categories={categories} />
+          <Suspense fallback={<div className="h-8" />}>
+            <NavLinks categories={categories} />
+          </Suspense>
         </nav>
       </div>
 

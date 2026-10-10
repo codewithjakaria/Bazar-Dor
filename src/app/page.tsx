@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import Hero from '@/components/home/Hero';
 import ProductSections from '@/components/home/ProductSections';
+import ProductLoading from '@/components/products/ProductLoading';
 
 export default function Page() {
   return (
@@ -8,7 +9,7 @@ export default function Page() {
       <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
         <Hero />
 
-        <Suspense fallback={<p className="py-8 text-gray-500">পণ্য লোড হচ্ছে…</p>}>
+        <Suspense fallback={<ProductLoading count={6} />}>
           <ProductSections />
         </Suspense>
       </div>

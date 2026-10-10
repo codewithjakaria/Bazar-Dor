@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
 import CategoryProductList from '@/components/products/CategoryProductList';
+import ProductLoading from '@/components/products/ProductLoading';
 import { getCategories, getProductsByCategory } from '@/lib/api';
 
 type PageProps = {
@@ -13,14 +15,7 @@ async function CategoryProducts({ params }: PageProps) {
   const category = categories.find(item => item.slug === slug);
 
   if (!category) {
-    return (
-      <section className="rounded-2xl bg-white p-8 text-center">
-        <h1 className="text-xl font-bold text-gray-800">এই category পাওয়া যায়নি</h1>
-        <Link href="/" className="mt-4 inline-block text-green-700 hover:underline">
-          হোম পেজে ফিরে যান
-        </Link>
-      </section>
-    );
+    notFound();
   }
 
   const products = await getProductsByCategory(slug);
@@ -57,7 +52,7 @@ export default function Page({ params }: PageProps) {
   return (
     <main className="flex-1 bg-[#f0f5f0]">
       <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
-        <Suspense fallback={<p className="py-8 text-gray-500">পণ্য লোড হচ্ছে…</p>}>
+        <Suspense fallback={<ProductLoading count={6} />}>
           <CategoryProducts params={params} />
         </Suspense>
       </div>

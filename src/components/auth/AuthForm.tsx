@@ -31,7 +31,7 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
       }
 
       toast.success(isSignup ? 'আপনার account তৈরি হয়েছে' : 'সাইন ইন হয়েছে');
-      router.push('/');
+      router.push(isSignup ? '/signin' : '/');
       router.refresh();
     } catch {
       toast.error('যোগাযোগ করা যাচ্ছে না, আবার চেষ্টা করুন');

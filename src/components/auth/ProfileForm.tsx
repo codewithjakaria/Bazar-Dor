@@ -1,13 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, type ChangeEvent, type FormEvent } from 'react';
+import Link from 'next/link';
+import { useState, type ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
 
 export default function ProfileForm({
-  name: savedName,
+  name,
   email,
   image: savedImage,
 }: {
@@ -16,7 +17,6 @@ export default function ProfileForm({
   image: string | null;
 }) {
   const router = useRouter();
-  const [name, setName] = useState(savedName);
   const [image, setImage] = useState(savedImage || '');
   const [loading, setLoading] = useState(false);
 
@@ -40,22 +40,18 @@ export default function ProfileForm({
     reader.readAsDataURL(file);
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleImageSave() {
     setLoading(true);
 
     try {
-      const result = await authClient.updateUser({
-        name: name.trim(),
-        image: image || undefined,
-      });
+      const result = await authClient.updateUser({ image });
 
       if (result.error) {
-        toast.error(result.error.message || 'নাম update করা যায়নি');
+        toast.error(result.error.message || 'ছবি update করা যায়নি');
         return;
       }
 
-      toast.success('প্রোফাইল update হয়েছে');
+      toast.success('ছবি update হয়েছে');
     } catch {
       toast.error('আবার চেষ্টা করুন');
     } finally {
@@ -132,28 +128,25 @@ export default function ProfileForm({
 
       <section className="rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-5 sm:p-6">
         <h2 className="mb-4 font-bold text-[#26352b]">তথ্য</h2>
+        <p className="text-sm text-gray-600">নাম: {name}</p>
+        <p className="mt-2 text-sm text-gray-600">ইমেইল: {email}</p>
+        <Link
+          href="/profile/update"
+          className="mt-5 block rounded-lg bg-green-700 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-green-800"
+        >
+          তথ্য update করুন
+        </Link>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <label className="block text-sm font-medium text-gray-700">
-            নাম
-            <input
-              name="name"
-              type="text"
-              value={name}
-              onChange={event => setName(event.target.value)}
-              required
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-green-700"
-            />
-          </label>
-
+        {image !== (savedImage || '') && (
           <button
-            type="submit"
+            type="button"
+            onClick={handleImageSave}
             disabled={loading}
-            className="w-full rounded-lg bg-green-700 px-4 py-2.5 font-semibold text-white hover:bg-green-800 disabled:opacity-60"
+            className="mt-3 w-full rounded-lg border border-green-700 px-4 py-2.5 text-sm font-semibold text-green-700 hover:bg-green-50 disabled:opacity-60"
           >
-            {loading ? 'অপেক্ষা করুন…' : 'আপডেট'}
+            {loading ? 'অপেক্ষা করুন…' : 'ছবি update করুন'}
           </button>
-        </form>
+        )}
       </section>
     </div>
   );
