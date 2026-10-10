@@ -54,3 +54,19 @@ Alternative API:
 ```text
 https://api.abcz.workers.dev/api/bazardor
 ```
+
+## Deploy করার আগে
+
+Vercel-এ project deploy করলে Project Settings-এর Environment Variables-এ `.env.example`-এর variable-গুলো যোগ করুন। `BETTER_AUTH_URL` এবং `NEXT_PUBLIC_APP_URL`-এ deploy করা site-এর URL দিন। MongoDB ও Google/GitHub-এর secret value নিজের account থেকে নিন; এগুলো GitHub-এ push করবেন না।
+
+Google OAuth-এর redirect URL হবে:
+
+```text
+https://আপনার-site-url/api/auth/callback/google
+```
+
+GitHub OAuth-এর callback URL হবে:
+
+```text
+https://আপনার-site-url/api/auth/callback/github
+```
