@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { getProducts } from '@/lib/api';
+import { auth } from '@/lib/auth';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -146,7 +149,15 @@ async function ProductDetails({ params }: PageProps) {
   );
 }
 
-export default function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect('/signin');
+  }
+
   return (
     <main className="flex-1 bg-[#f0f5f0]">
       <div className="mx-auto max-w-5xl px-4 py-5 sm:px-6 sm:py-8">

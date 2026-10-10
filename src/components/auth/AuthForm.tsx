@@ -1,16 +1,58 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { authClient } from '@/lib/auth-client';
 
 export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
-  const [message, setMessage] = useState('');
   const isSignup = mode === 'signup';
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setMessage('Login setup পরের ধাপে যুক্ত হবে।');
+    setLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get('name') || '');
+    const email = String(formData.get('email') || '');
+    const password = String(formData.get('password') || '');
+
+    try {
+      const result = isSignup
+        ? await authClient.signUp.email({ name, email, password })
+        : await authClient.signIn.email({ email, password });
+
+      if (result.error) {
+        toast.error(result.error.message || 'আবার চেষ্টা করুন');
+        return;
+      }
+
+      toast.success(isSignup ? 'আপনার account তৈরি হয়েছে' : 'সাইন ইন হয়েছে');
+      router.push('/');
+      router.refresh();
+    } catch {
+      toast.error('যোগাযোগ করা যাচ্ছে না, আবার চেষ্টা করুন');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleSocialLogin(provider: 'google' | 'github') {
+    try {
+      const result = await authClient.signIn.social({
+        provider,
+        callbackURL: '/',
+      });
+
+      if (result.error) {
+        toast.error(result.error.message || 'আবার চেষ্টা করুন');
+      }
+    } catch {
+      toast.error('যোগাযোগ করা যাচ্ছে না, আবার চেষ্টা করুন');
+    }
   }
 
   return (
@@ -61,9 +103,10 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-green-700 px-4 py-2.5 font-semibold text-white hover:bg-green-800"
+          disabled={loading}
+          className="w-full rounded-lg bg-green-700 px-4 py-2.5 font-semibold text-white hover:bg-green-800 disabled:opacity-60"
         >
-          {isSignup ? 'সাইন আপ' : 'সাইন ইন'}
+          {loading ? 'অপেক্ষা করুন…' : isSignup ? 'সাইন আপ' : 'সাইন ইন'}
         </button>
       </form>
 
@@ -76,21 +119,19 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
-          onClick={() => setMessage('Google login পরের ধাপে চালু হবে।')}
+          onClick={() => handleSocialLogin('google')}
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50"
         >
           Google
         </button>
         <button
           type="button"
-          onClick={() => setMessage('GitHub login পরের ধাপে চালু হবে।')}
+          onClick={() => handleSocialLogin('github')}
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50"
         >
           GitHub
         </button>
       </div>
-
-      {message && <p role="status" className="mt-4 text-sm text-amber-700">{message}</p>}
 
       <p className="mt-6 text-center text-sm text-gray-600">
         {isSignup ? 'আগে থেকেই account আছে?' : 'নতুন account দরকার?'}{' '}
