@@ -6,6 +6,8 @@ import { redirect } from 'next/navigation';
 import { getProducts } from '@/lib/api';
 import { auth } from '@/lib/auth';
 
+export const instant = false;
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
