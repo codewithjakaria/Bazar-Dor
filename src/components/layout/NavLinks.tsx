@@ -8,7 +8,7 @@ export default function NavLinks({ categories }: { categories: Category[] }) {
   const currentPath = usePathname();
 
   return (
-    <ul className="flex gap-1">
+    <ul className="flex w-max min-w-full flex-nowrap gap-1">
       {categories.map(cat => {
         const link = `/category/${cat.slug}`;
         const isActive = currentPath === link;
