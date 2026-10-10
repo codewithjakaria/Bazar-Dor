@@ -1,4 +1,5 @@
 import type { Product } from '@/types';
+import Link from 'next/link';
 
 export default function ProductCard({ product }: { product: Product }) {
   let unitName = 'প্রতি কেজি';
@@ -21,29 +22,31 @@ export default function ProductCard({ product }: { product: Product }) {
   }
 
   return (
-    <article className="rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-4">
-      <div className="flex items-center gap-3">
-        <span className="grid size-11 place-items-center rounded-xl bg-[#f0f5ef] text-2xl">
-          {product.image}
-        </span>
-        <div>
-          <h3 className="text-sm font-bold text-[#26352b]">{product.nameBn}</h3>
-          <p className="text-xs text-gray-500">{unitName}</p>
-        </div>
-      </div>
-
-      <div className="mt-4 flex items-end justify-between">
-        <div>
-          <p className="text-xs text-gray-500">আজকের দাম</p>
-          <p className="font-bold text-[#26352b]">
-            {product.today.toLocaleString('bn-BD')} টাকা
-          </p>
+    <Link href={`/product/${product.slug}`} className="block rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-700">
+      <article className="rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-4 transition hover:shadow-sm">
+        <div className="flex items-center gap-3">
+          <span className="grid size-11 place-items-center rounded-xl bg-[#f0f5ef] text-2xl">
+            {product.image}
+          </span>
+          <div>
+            <h3 className="text-sm font-bold text-[#26352b]">{product.nameBn}</h3>
+            <p className="text-xs text-gray-500">{unitName}</p>
+          </div>
         </div>
 
-        <span className={`rounded-full px-2 py-1 text-xs ${badgeColor}`}>
-          {arrow} {Math.abs(product.change.pct).toLocaleString('bn-BD')}%
-        </span>
-      </div>
-    </article>
+        <div className="mt-4 flex items-end justify-between">
+          <div>
+            <p className="text-xs text-gray-500">আজকের দাম</p>
+            <p className="font-bold text-[#26352b]">
+              {product.today.toLocaleString('bn-BD')} টাকা
+            </p>
+          </div>
+
+          <span className={`rounded-full px-2 py-1 text-xs ${badgeColor}`}>
+            {arrow} {Math.abs(product.change.pct).toLocaleString('bn-BD')}%
+          </span>
+        </div>
+      </article>
+    </Link>
   );
 }

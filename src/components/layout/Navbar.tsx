@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { getCategories } from '@/lib/api';
 import NavLinks from './NavLinks';
 import AuthButtons from './AuthButtons';
+import PriceTicker from './PriceTicker';
 export default async function Navbar() {
   const categories = await getCategories().catch(() => []);
 
@@ -35,6 +37,10 @@ export default async function Navbar() {
           <NavLinks categories={categories} />
         </nav>
       </div>
+
+      <Suspense fallback={<div className="h-8 border-t border-gray-100 bg-[#fbfdfb]" />}>
+        <PriceTicker />
+      </Suspense>
     </header>
   );
 }

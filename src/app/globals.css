@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@keyframes price-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.price-ticker {
+  animation: price-ticker-scroll 35s linear infinite alternate;
+}
+
+.price-ticker:hover {
+  animation-play-state: paused;
+}
