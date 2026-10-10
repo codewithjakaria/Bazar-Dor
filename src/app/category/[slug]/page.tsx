@@ -22,12 +22,12 @@ async function CategoryProducts({ params }: PageProps) {
 
   return (
     <>
-      <section className="mb-4 flex items-center gap-4 rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-5 sm:p-6">
-        <span className="grid size-14 place-items-center rounded-xl bg-[#f0f5ef] text-3xl">
+      <section className="mb-4 flex min-w-0 items-center gap-3 rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-4 sm:gap-4 sm:p-6">
+        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-[#f0f5ef] text-2xl sm:size-14 sm:text-3xl">
           {category.icon}
         </span>
-        <div>
-          <h1 className="text-xl font-bold text-[#26352b]">{category.nameBn}</h1>
+        <div className="min-w-0">
+          <h1 className="break-words text-xl font-bold text-[#26352b]">{category.nameBn}</h1>
           <p className="mt-1 text-xs text-gray-500">
             {products.length.toLocaleString('bn-BD')}টি পণ্যের আজকের দাম ও পরিবর্তন
           </p>

@@ -44,7 +44,7 @@ async function ProductDetails({ params }: PageProps) {
 
   return (
     <>
-      <p className="mb-5 text-xs text-gray-500">
+      <p className="mb-5 flex flex-wrap items-center gap-y-1 text-xs text-gray-500">
         <Link href="/" className="hover:text-green-700">হোম</Link>
         <span className="mx-2">›</span>
         <span>{product.categoryNameBn}</span>
@@ -53,12 +53,12 @@ async function ProductDetails({ params }: PageProps) {
       </p>
 
       {/* Product-এর নাম ও আজকের দাম */}
-      <section className="mb-4 flex flex-col justify-between gap-5 rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-5 sm:flex-row sm:items-center sm:p-7">
-        <div className="flex items-center gap-4">
+      <section className="mb-4 flex flex-col justify-between gap-4 rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-4 sm:flex-row sm:items-center sm:gap-5 sm:p-7">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
           <span className="grid size-16 shrink-0 place-items-center rounded-2xl bg-[#f0f5ef] text-3xl">
             {product.image}
           </span>
-          <div>
+          <div className="min-w-0">
             <h1 className="text-xl font-bold text-[#26352b] sm:text-2xl">
               {product.nameBn}
             </h1>
@@ -73,7 +73,7 @@ async function ProductDetails({ params }: PageProps) {
           </div>
         </div>
 
-        <div className="rounded-xl bg-[#f0f5ef] px-5 py-3 text-center sm:min-w-28">
+        <div className="w-full rounded-xl bg-[#f0f5ef] px-5 py-3 text-center sm:w-auto sm:min-w-28">
           <p className="text-xs text-gray-500">আজকের দাম</p>
           <p className="text-2xl font-bold text-[#26352b]">
             {product.today.toLocaleString('bn-BD')}
@@ -88,7 +88,7 @@ async function ProductDetails({ params }: PageProps) {
       {/* সর্বনিম্ন, সর্বোচ্চ এবং গড় দাম */}
       <section className="rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-4 sm:p-6">
         <h2 className="mb-3 text-sm font-bold text-[#26352b]">দামের সারসংক্ষেপ</h2>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-xl border border-[#e2ebe3] p-4">
             <p className="text-xs text-gray-500">সর্বনিম্ন দাম</p>
             <p className="mt-1 font-bold text-green-700">

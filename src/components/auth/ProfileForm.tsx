@@ -127,9 +127,9 @@ export default function ProfileForm({
           </label>
         </div>
 
-        <div className="flex-1 text-center sm:text-left">
+        <div className="min-w-0 flex-1 text-center sm:text-left">
           <p className="font-semibold text-[#26352b]">{name}</p>
-          <p className="text-sm text-gray-500">{email}</p>
+          <p className="break-all text-sm text-gray-500">{email}</p>
         </div>
 
         <button
@@ -144,7 +144,7 @@ export default function ProfileForm({
       <section className="rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-5 sm:p-6">
         <h2 className="mb-4 font-bold text-[#26352b]">তথ্য</h2>
         <p className="text-sm text-gray-600">নাম: {name}</p>
-        <p className="mt-2 text-sm text-gray-600">ইমেইল: {email}</p>
+        <p className="mt-2 break-all text-sm text-gray-600">ইমেইল: {email}</p>
         <p className="mt-4 text-xs text-gray-500">
           GitHub দিয়ে sign in করতে চাইলে আগে GitHub account-টি link করুন।
         </p>

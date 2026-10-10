@@ -19,12 +19,12 @@ export default function CategoryProductList({ products }: { products: Product[] 
 
   return (
     <>
-      <div className="mb-3 flex items-center justify-between rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] px-4 py-3">
+      <div className="mb-3 flex flex-col gap-2 rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] px-4 py-3 min-[380px]:flex-row min-[380px]:items-center min-[380px]:justify-between">
         <span className="text-sm text-gray-600">সাজান</span>
         <select
           value={sortOrder}
           onChange={event => setSortOrder(event.target.value)}
-          className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700"
+          className="min-h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 min-[380px]:w-auto"
         >
           <option value="default">ডিফল্ট</option>
           <option value="low-to-high">দাম: কম থেকে বেশি</option>
@@ -36,7 +36,7 @@ export default function CategoryProductList({ products }: { products: Product[] 
         মোট {products.length.toLocaleString('bn-BD')}টি পণ্য দেখানো হচ্ছে
       </p>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {sortedProducts.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}

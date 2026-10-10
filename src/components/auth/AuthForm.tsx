@@ -56,8 +56,8 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
   }
 
   return (
-    <section className="w-full max-w-md rounded-2xl border border-[#e2ebe3] bg-white p-6 shadow-sm sm:p-8">
-      <h1 className="text-2xl font-bold text-[#26352b]">
+    <section className="w-full max-w-md rounded-2xl border border-[#e2ebe3] bg-white p-5 shadow-sm sm:p-8">
+      <h1 className="text-xl font-bold leading-snug text-[#26352b] sm:text-2xl">
         {isSignup ? 'নতুন account খুলুন' : 'আপনার account-এ সাইন ইন করুন'}
       </h1>
       <p className="mt-2 text-sm text-gray-600">
@@ -73,7 +73,7 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
               type="text"
               autoComplete="name"
               required
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-green-700"
+              className="mt-1 min-h-11 w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-green-700"
             />
           </label>
         )}
@@ -85,7 +85,7 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
             type="email"
             autoComplete="email"
             required
-            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-green-700"
+            className="mt-1 min-h-11 w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-green-700"
           />
         </label>
 
@@ -97,7 +97,7 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
             autoComplete={isSignup ? 'new-password' : 'current-password'}
             minLength={8}
             required
-            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-green-700"
+            className="mt-1 min-h-11 w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-green-700"
           />
         </label>
 
@@ -120,14 +120,14 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
         <button
           type="button"
           onClick={() => handleSocialLogin('google')}
-          className="rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50"
+          className="min-h-11 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50"
         >
           Google
         </button>
         <button
           type="button"
           onClick={() => handleSocialLogin('github')}
-          className="rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50"
+          className="min-h-11 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50"
         >
           GitHub
         </button>

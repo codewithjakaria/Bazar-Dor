@@ -19,7 +19,7 @@
 }
 
 .price-ticker {
-  animation: price-ticker-scroll 35s linear infinite alternate;
+  animation: price-ticker-scroll 35s linear infinite;
 }
 
 .price-ticker:hover {

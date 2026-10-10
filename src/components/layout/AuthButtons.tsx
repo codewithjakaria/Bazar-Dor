@@ -80,10 +80,10 @@ export default function AuthButtons() {
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex shrink-0 gap-1.5 sm:gap-2">
       <Link
         href="/signin"
-        className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-100"
+        className="min-h-9 rounded-lg border border-gray-300 px-2 py-1.5 text-xs hover:bg-gray-100 sm:px-3 sm:text-sm"
       >
         সাইন ইন
       </Link>
@@ -91,7 +91,7 @@ export default function AuthButtons() {
     
       <Link
         href="/signup"
-        className="px-3 py-1.5 text-sm bg-green-700 text-white rounded-lg hover:bg-green-800"
+        className="min-h-9 rounded-lg bg-green-700 px-2 py-1.5 text-xs text-white hover:bg-green-800 sm:px-3 sm:text-sm"
       >
         সাইন আপ
       </Link>
