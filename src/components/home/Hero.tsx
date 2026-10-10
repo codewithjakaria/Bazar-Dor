@@ -1,19 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import BanglaDate from '@/components/common/BanglaDate';
 
 export default function Hero() {
-  const today = new Date().toLocaleDateString('bn-BD', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-
   return (
     <section className="mb-8 flex flex-col items-center justify-between gap-4 rounded-3xl border border-[#e2ebe3] bg-[#fbfdfb] p-6 sm:flex-row sm:p-8">
       <div>
         <p className="mb-3 inline-block rounded-full bg-[#e8f4eb] px-3 py-1 text-xs text-green-700">
-          {today}
+          <BanglaDate />
         </p>
         <h1 className="text-2xl font-bold text-[#26352b] sm:text-3xl">
           আজকের বাজারের দাম এক নজরে

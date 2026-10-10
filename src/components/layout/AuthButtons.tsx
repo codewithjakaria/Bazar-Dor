@@ -7,7 +7,7 @@ export default function AuthButtons() {
         href="/signin"
         className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-100"
       >
-      
+        সাইন ইন
       </Link>
 
     
@@ -15,7 +15,7 @@ export default function AuthButtons() {
         href="/signup"
         className="px-3 py-1.5 text-sm bg-green-700 text-white rounded-lg hover:bg-green-800"
       >
-        
+        সাইন আপ
       </Link>
     </div>
   );

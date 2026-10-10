@@ -2,18 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getCategories } from '@/lib/api';
+import BanglaDate from '@/components/common/BanglaDate';
 import NavLinks from './NavLinks';
 import AuthButtons from './AuthButtons';
 import PriceTicker from './PriceTicker';
 export default async function Navbar() {
   const categories = await getCategories().catch(() => []);
-
-  const today = new Date().toLocaleDateString('bn-BD', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
 
   return (
     <header className="bg-white border-b sticky top-0 z-40">
@@ -27,7 +21,9 @@ export default async function Navbar() {
               <h1 className="block whitespace-nowrap text-lg font-bold leading-tight text-gray-900">
                 বাজার দর
               </h1>
-              <p className="whitespace-nowrap text-xs text-gray-500">{today}</p>
+              <p className="whitespace-nowrap text-xs text-gray-500">
+                <BanglaDate />
+              </p>
             </div>
           </Link>
 
