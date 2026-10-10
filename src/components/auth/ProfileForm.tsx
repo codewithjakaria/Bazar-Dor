@@ -1,8 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
@@ -18,7 +17,29 @@ export default function ProfileForm({
 }) {
   const router = useRouter();
   const [image, setImage] = useState(savedImage || '');
+  const [newName, setNewName] = useState(name);
   const [loading, setLoading] = useState(false);
+
+  async function handleNameSave(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+
+    try {
+      const result = await authClient.updateUser({ name: newName.trim() });
+
+      if (result.error) {
+        toast.error(result.error.message || 'নাম update করা যায়নি');
+        return;
+      }
+
+      toast.success('নাম update হয়েছে');
+      router.refresh();
+    } catch {
+      toast.error('আবার চেষ্টা করুন');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -70,21 +91,6 @@ export default function ProfileForm({
 
       toast.success('সাইন আউট হয়েছে');
       router.push('/');
-    } catch {
-      toast.error('আবার চেষ্টা করুন');
-    }
-  }
-
-  async function handleGitHubLink() {
-    try {
-      const result = await authClient.linkSocial({
-        provider: 'github',
-        callbackURL: '/profile',
-      });
-
-      if (result.error) {
-        toast.error(result.error.message || 'GitHub account link করা যায়নি');
-      }
     } catch {
       toast.error('আবার চেষ্টা করুন');
     }
@@ -143,24 +149,27 @@ export default function ProfileForm({
 
       <section className="rounded-2xl border border-[#e2ebe3] bg-[#fbfdfb] p-5 sm:p-6">
         <h2 className="mb-4 font-bold text-[#26352b]">তথ্য</h2>
-        <p className="text-sm text-gray-600">নাম: {name}</p>
-        <p className="mt-2 break-all text-sm text-gray-600">ইমেইল: {email}</p>
-        <p className="mt-4 text-xs text-gray-500">
-          GitHub দিয়ে sign in করতে চাইলে আগে GitHub account-টি link করুন।
-        </p>
-        <button
-          type="button"
-          onClick={handleGitHubLink}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-        >
-          GitHub account link করুন
-        </button>
-        <Link
-          href="/profile/update"
-          className="mt-3 block rounded-lg bg-green-700 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-green-800"
-        >
-          তথ্য update করুন
-        </Link>
+        <form onSubmit={handleNameSave} className="space-y-3">
+          <label htmlFor="profile-name" className="block text-sm font-medium text-gray-700">
+            নাম
+          </label>
+          <input
+            id="profile-name"
+            name="name"
+            type="text"
+            value={newName}
+            onChange={event => setNewName(event.target.value)}
+            required
+            className="min-h-11 w-full rounded-lg border border-[#e2ebe3] bg-[#fbfdfb] px-3 py-2.5 outline-none focus:border-green-700"
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="min-h-11 w-full rounded-lg bg-green-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-800 disabled:opacity-60"
+          >
+            {loading ? 'অপেক্ষা করুন…' : 'আপডেট'}
+          </button>
+        </form>
 
         {image !== (savedImage || '') && (
           <button

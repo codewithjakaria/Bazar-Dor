@@ -58,19 +58,29 @@ export default function AuthButtons() {
         </button>
 
         {menuOpen && (
-          <div className="absolute right-0 top-full z-50 mt-2 w-40 rounded-xl border border-[#e2ebe3] bg-white p-1 shadow-lg">
+          <div className="absolute right-0 top-full z-50 mt-2 w-60 max-w-[calc(100vw-1.5rem)] rounded-xl border border-[#e2ebe3] bg-[#fbfdfb] p-3 shadow-lg">
+            <div className="border-b border-[#e2ebe3] px-2 pb-3">
+              <p className="truncate text-sm font-semibold text-[#26352b]">
+                {session.user.name}
+              </p>
+              <p className="truncate text-xs text-gray-500">
+                {session.user.email}
+              </p>
+            </div>
             <Link
               href="/profile"
               onClick={() => setMenuOpen(false)}
-              className="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-[#f0f5f0]"
+              className="mt-2 flex items-center gap-2 rounded-lg px-2 py-2 text-sm text-gray-700 hover:bg-[#f0f5f0]"
             >
+              <span aria-hidden="true">👤</span>
               আমার প্রোফাইল
             </Link>
             <button
               type="button"
               onClick={handleSignOut}
-              className="w-full rounded-lg px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
             >
+              <span aria-hidden="true">↶</span>
               সাইন আউট
             </button>
           </div>

@@ -16,7 +16,9 @@ export default async function Navbar() {
         <div className="flex items-center justify-between py-3">
   
           <Link href="/" className="flex min-w-0 items-center gap-2 text-gray-900">
-            <Image src="/logo-icon.png" alt="বাজার দর" width={40} height={40} className="size-9 shrink-0 sm:size-10" />
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-green-700 sm:size-10">
+              <Image src="/logo-icon.png" alt="" width={30} height={30} className="size-7 object-contain sm:size-8" />
+            </span>
             <div className="min-w-0">
               <h1 className="block whitespace-nowrap text-lg font-bold leading-tight text-gray-900">
                 বাজার দর
