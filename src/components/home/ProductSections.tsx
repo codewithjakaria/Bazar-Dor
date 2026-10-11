@@ -2,7 +2,11 @@ import { getProducts } from '@/lib/api';
 import ProductGrid from './ProductGrid';
 
 export default async function ProductSections() {
-  const products = await getProducts();
+  const products = await getProducts().catch(() => null);
+
+  if (!products) {
+    return <p className="py-8 text-center text-sm text-gray-600">এখন পণ্য দেখানো যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।</p>;
+  }
 
   // দামের পরিবর্তন অনুযায়ী বেড়েছে এমন পণ্যগুলো সামনে আনি
   const increasedProducts = products

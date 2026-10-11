@@ -11,7 +11,7 @@ export default async function ProfileUpdatePage() {
   });
 
   if (!session) {
-    redirect('/signin');
+    redirect('/signin?reason=protected');
   }
 
   return (

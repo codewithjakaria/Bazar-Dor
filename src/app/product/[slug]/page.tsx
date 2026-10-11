@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getProducts } from '@/lib/api';
+import { getProductById, getProducts } from '@/lib/api';
 import { auth } from '@/lib/auth';
 
 export const instant = false;
@@ -15,12 +15,26 @@ type PageProps = {
 // URL থেকে slug নিয়ে সেই পণ্যটি বের করি
 async function ProductDetails({ params }: PageProps) {
   const { slug } = await params;
-  const products = await getProducts();
-  const product = products.find(item => item.slug === slug);
+  const products = await getProducts().catch(() => null);
 
-  if (!product) {
+  if (!products) {
+    return (
+      <section className="rounded-2xl border border-[#e2ebe3] bg-white p-8 text-center">
+        <p className="text-gray-700">এখন পণ্যের তথ্য আনা যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।</p>
+        <Link href="/" className="mt-4 inline-block text-green-700 hover:underline">
+          হোম পেজে ফিরে যান
+        </Link>
+      </section>
+    );
+  }
+
+  const listedProduct = products.find(item => item.slug === slug);
+
+  if (!listedProduct) {
     notFound();
   }
+
+  const product = await getProductById(listedProduct.id).catch(() => listedProduct);
 
   let unitName = 'কেজি';
   if (product.unit === 'litre') unitName = 'লিটার';
@@ -157,7 +171,7 @@ export default async function Page({ params }: PageProps) {
   });
 
   if (!session) {
-    redirect('/signin');
+    redirect('/signin?reason=protected');
   }
 
   return (

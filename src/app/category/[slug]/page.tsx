@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import CategoryProductList from '@/components/products/CategoryProductList';
 import ProductLoading from '@/components/products/ProductLoading';
-import { getCategories, getProductsByCategory } from '@/lib/api';
+import { getCategories, getCategoryBySlug, getProductsByCategory } from '@/lib/api';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -11,14 +11,16 @@ type PageProps = {
 
 async function CategoryProducts({ params }: PageProps) {
   const { slug } = await params;
-  const categories = await getCategories();
-  const category = categories.find(item => item.slug === slug);
+  const category = await getCategoryBySlug(slug).catch(async () => {
+    const categories = await getCategories().catch(() => []);
+    return categories.find(item => item.slug === slug) ?? null;
+  });
 
   if (!category) {
     notFound();
   }
 
-  const products = await getProductsByCategory(slug);
+  const products = await getProductsByCategory(slug).catch(() => null);
 
   return (
     <>
@@ -34,7 +36,14 @@ async function CategoryProducts({ params }: PageProps) {
         </div>
       </section>
 
-      {products.length > 0 ? (
+      {products === null ? (
+        <section className="rounded-2xl border border-[#e2ebe3] bg-white p-8 text-center">
+          <p className="text-gray-700">এখন পণ্যের দাম আনা যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।</p>
+          <Link href="/" className="mt-4 inline-block text-green-700 hover:underline">
+            হোম পেজে ফিরে যান
+          </Link>
+        </section>
+      ) : products.length > 0 ? (
         <CategoryProductList products={products} />
       ) : (
         <section className="rounded-2xl bg-white p-8 text-center">

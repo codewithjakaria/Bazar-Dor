@@ -1,15 +1,27 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
 
-export default function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
+export default function AuthForm({
+  mode,
+  showProtectedMessage = false,
+}: {
+  mode: 'signin' | 'signup';
+  showProtectedMessage?: boolean;
+}) {
   const isSignup = mode === 'signup';
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (showProtectedMessage) {
+      toast.error('এই পেজটি দেখতে আগে সাইন ইন করুন');
+    }
+  }, [showProtectedMessage]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

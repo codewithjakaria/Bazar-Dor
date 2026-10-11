@@ -1,6 +1,10 @@
 import type { Product } from '@/types';
 
-const BASE_URL = 'https://api.abcz.workers.dev/api/bazardor';
+const BASE_URLS = [
+  'https://openapi.programming-hero.com/api/bazardor',
+  'https://api.api-store.workers.dev/api/bazardor',
+  'https://api.abcz.workers.dev/api/bazardor',
+];
 
 export type Category = {
   id: string;
@@ -9,31 +13,43 @@ export type Category = {
   icon: string; 
 };
 export async function getCategories(): Promise<Category[]> {
-  const res = await fetch(`${BASE_URL}/categories`, { cache: 'force-cache' });
-  const data = await res.json();
-  return data;
+  return getData<Category[]>('/categories');
+}
+
+export async function getCategoryBySlug(slug: string): Promise<Category> {
+  return getData<Category>(`/categories/${encodeURIComponent(slug)}`);
 }
 
 export async function getProducts(): Promise<Product[]> {
-  const res = await fetch(`${BASE_URL}/products`, {
-    next: { revalidate: 300 },
-  });
+  return getData<Product[]>('/products');
+}
 
-  if (!res.ok) {
-    throw new Error(`Products আনতে সমস্যা হয়েছে: ${res.status}`);
-  }
-
-  return res.json();
+export async function getProductById(id: number): Promise<Product> {
+  return getData<Product>(`/products/${id}`);
 }
 
 export async function getProductsByCategory(category: string): Promise<Product[]> {
-  const res = await fetch(`${BASE_URL}/products?category=${category}`, {
-    next: { revalidate: 300 },
-  });
+  return getData<Product[]>(`/products?category=${encodeURIComponent(category)}`);
+}
 
-  if (!res.ok) {
-    throw new Error(`Products আনতে সমস্যা হয়েছে: ${res.status}`);
+async function getData<T>(path: string): Promise<T> {
+  let errorMessage = 'API থেকে data পাওয়া যায়নি';
+
+  for (const baseUrl of BASE_URLS) {
+    try {
+      const res = await fetch(`${baseUrl}${path}`, {
+        next: { revalidate: 300 },
+      });
+
+      if (res.ok) {
+        return res.json();
+      }
+
+      errorMessage = `API error: ${res.status}`;
+    } catch {
+      errorMessage = 'API-এর সাথে যোগাযোগ করা যাচ্ছে না';
+    }
   }
 
-  return res.json();
+  throw new Error(errorMessage);
 }

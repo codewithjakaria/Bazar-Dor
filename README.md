@@ -46,10 +46,10 @@ Browser-এ `http://localhost:3000` খুলুন।
 পণ্য ও category-এর data এই API থেকে আসে:
 
 ```text
-https://api.api-store.workers.dev/api/bazardor
+https://openapi.programming-hero.com/api/bazardor
 ```
 
-Alternative API:
+যদি এই API-তে সমস্যা হয়, এই দুটো বিকল্প address ব্যবহার হয়:
 
 ```text
 https://api.abcz.workers.dev/api/bazardor
