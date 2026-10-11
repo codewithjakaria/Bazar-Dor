@@ -31,7 +31,7 @@ async function CategoryProducts({ params }: PageProps) {
         <div className="min-w-0">
           <h1 className="break-words text-xl font-bold text-[#26352b]">{category.nameBn}</h1>
           <p className="mt-1 text-xs text-gray-500">
-            {products.length.toLocaleString('bn-BD')}টি পণ্যের আজকের দাম ও পরিবর্তন
+            {(products?.length ?? 0).toLocaleString('bn-BD')}টি পণ্যের আজকের দাম ও পরিবর্তন
           </p>
         </div>
       </section>
